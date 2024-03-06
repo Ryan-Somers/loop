@@ -2,7 +2,6 @@ import { ID, Query } from 'appwrite';
 
 import { INewPost, INewUser, IUpdatePost } from "@/types";
 import { account, appwriteConfig, avatars, databases, storage } from './config';
-import { url } from 'inspector';
 
 
 export async function createUserAccount(user: INewUser) {
@@ -328,11 +327,11 @@ export async function updatePost(post: IUpdatePost) {
     }
 }
 
-export async function getInfinitePosts({pageParam}: {pageParam: number}) {
-    const queries: any[] = [Query.orderDesc('$createdAt'), Query.limit(20)]
+export async function getInfinitePosts({pageParam = ''}: {pageParam?: string}) {
+    const queries: any[] = [Query.orderDesc('$createdAt'), Query.limit(20)];
 
     if (pageParam) {
-    queries.push(Query.cursorAfter(pageParam.toString()));
+        queries.push(Query.cursorAfter(pageParam));
     }
 
     try {
@@ -340,7 +339,7 @@ export async function getInfinitePosts({pageParam}: {pageParam: number}) {
             appwriteConfig.databaseId,
             appwriteConfig.postCollectionId,
             queries,
-            )
+        );
 
         if (!posts) throw Error;
 
@@ -349,6 +348,7 @@ export async function getInfinitePosts({pageParam}: {pageParam: number}) {
         console.log(error);
     }
 }
+
 
 export async function searchPosts(searchTerm: string) {
     
