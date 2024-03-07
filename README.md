@@ -2,7 +2,7 @@
 
 ## Details
 <p>
-  This is a social media react app that I worked on following a tutorial on YouTube. 
+  This is a social media react app that I worked on following a tutorial on YouTube from JSMastery. 
   <br>
   <br>
   This features the use of different languages such as:
