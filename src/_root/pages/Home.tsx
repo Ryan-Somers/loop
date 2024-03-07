@@ -4,7 +4,7 @@ import { useGetRecentPosts } from "@/lib/react-query/queriesAndMutations";
 import { Models } from "appwrite";
 
 const Home = () => {
- const {data: posts, isPending: isPostLoading} = useGetRecentPosts();
+  const { data: posts, isPending: isPostLoading } = useGetRecentPosts();
   return (
     <div className="flex flex-1">
       <div className="home-container">
@@ -15,14 +15,14 @@ const Home = () => {
           ) : (
             <ul className="flex flex-col flex-1 w-full gap-9">
               {posts?.documents.map((post: Models.Document) => (
-                <PostCard post={post} key={post.caption}/>
-                ))}
+                <PostCard post={post} key={post.caption} />
+              ))}
             </ul>
           )}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

@@ -1,7 +1,5 @@
 const UpdateProfile = () => {
-  return (
-    <div>UpdateProfile</div>
-  )
-}
+  return <div>UpdateProfile</div>;
+};
 
-export default UpdateProfile
+export default UpdateProfile;
