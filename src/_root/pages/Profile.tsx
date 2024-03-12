@@ -1,4 +1,3 @@
-import PostCard from "@/components/shared/PostCard";
 import { useUserContext } from "@/context/AuthContext";
 
 const Profile = () => {
