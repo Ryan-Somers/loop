@@ -1,8 +1,8 @@
-# Snapgram
+# Loop
 
 ## Details
 <p>
-  This is a social media react app that I worked on following a tutorial on YouTube from JSMastery. 
+  This is a social media app built with React and Appwrite.io for the backend.
   <br>
   <br>
   This features the use of different languages such as:
@@ -35,5 +35,5 @@
 
 ## Deployment
 <p>
-  Right now, it is still in development. However, this site is live to test and use @ https://snapgram-six-livid.vercel.app/
+  Right now, it is still in development. However, this site is live to test and use @ https://joinloop.dev
 </p>
