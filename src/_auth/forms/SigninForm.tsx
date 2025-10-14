@@ -2,7 +2,14 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { SigninValidation } from "@/lib/validation";
@@ -52,12 +59,17 @@ const SigninForm = () => {
   return (
     <Form {...form}>
       <div className="flex-col sm:w-420 flex-center">
-        <img src="/assets/images/logo.svg" />
+        <h2 className="pt-5 h3-bold md:h2-bold sm:pt-12">
+          Login to your account
+        </h2>
+        <p className="mt-2 text-light-3 small-medium md:base-regular">
+          Welcome Back! Please enter your details.
+        </p>
 
-        <h2 className="pt-5 h3-bold md:h2-bold sm:pt-12">Login to your account</h2>
-        <p className="mt-2 mt-12 text-light-3 small-medium md:base-regular">Welcome Back! Please enter your details.</p>
-
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col w-full gap-5 mt-4 space-y-8">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col w-full gap-5 mt-4 space-y-8"
+        >
           <FormField
             control={form.control}
             name="email"
@@ -96,7 +108,10 @@ const SigninForm = () => {
 
           <p className="mt-2 text-center text-small-regular text-light-2">
             Don't have an account?
-            <Link to="/sign-up" className="ml-2 text-primary-500 text-small-semibold">
+            <Link
+              to="/sign-up"
+              className="ml-2 text-primary-500 text-small-semibold"
+            >
               Create One!
             </Link>
           </p>
