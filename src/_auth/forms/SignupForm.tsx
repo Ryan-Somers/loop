@@ -64,13 +64,11 @@ const SignupForm = () => {
   }
   return (
     <Form {...form}>
-      <div className="flex-col sm:w-420 flex-center">
-        <img src="/assets/images/logo.svg" />
+      <div className="flex-col w-full flex-center gap-2">
+        <h2 className="h3-bold md:h2-bold">Create your account</h2>
+        <p className="text-light-3 small-medium md:base-regular">Join Loop in a few steps.</p>
 
-        <h2 className="pt-5 h3-bold md:h2-bold sm:pt-12">Create a New Account</h2>
-        <p className="mt-2 mt-12 text-light-3 small-medium md:base-regular">To use Snapgram please enter your details</p>
-
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col w-full gap-5 mt-4 space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="mt-6 flex w-full flex-col gap-5">
           <FormField
             control={form.control}
             name="name"
@@ -123,7 +121,7 @@ const SignupForm = () => {
               </FormItem>
             )}
           />
-          <Button type="submit" className="shad-button_primary">
+          <Button type="submit" className="shad-button_primary w-full">
             {isCreatingUser ? (
               <div className="gap-2 flex-center">
                 <Loader /> Loading...
@@ -132,8 +130,7 @@ const SignupForm = () => {
               "Sign Up"
             )}
           </Button>
-
-          <p className="mt-2 text-center text-small-regular text-light-2">
+          <p className="mt-4 text-center text-small-regular text-light-2">
             Already have an account?
             <Link to="/sign-in" className="ml-2 text-primary-500 text-small-semibold">
               Log in

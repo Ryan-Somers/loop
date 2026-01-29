@@ -58,17 +58,15 @@ const SigninForm = () => {
   }
   return (
     <Form {...form}>
-      <div className="flex-col sm:w-420 flex-center">
-        <h2 className="pt-5 h3-bold md:h2-bold sm:pt-12">
-          Login to your account
-        </h2>
-        <p className="mt-2 text-light-3 small-medium md:base-regular">
-          Welcome Back! Please enter your details.
+      <div className="flex-col w-full flex-center gap-2">
+        <h2 className="h3-bold md:h2-bold">Welcome back</h2>
+        <p className="text-light-3 small-medium md:base-regular">
+          Sign in to continue.
         </p>
 
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col w-full gap-5 mt-4 space-y-8"
+          className="mt-6 flex w-full flex-col gap-5"
         >
           <FormField
             control={form.control}
@@ -96,7 +94,7 @@ const SigninForm = () => {
               </FormItem>
             )}
           />
-          <Button type="submit" className="shad-button_primary">
+          <Button type="submit" className="shad-button_primary w-full">
             {isUserLoading ? (
               <div className="gap-2 flex-center">
                 <Loader /> Loading...
@@ -105,8 +103,7 @@ const SigninForm = () => {
               "Sign In"
             )}
           </Button>
-
-          <p className="mt-2 text-center text-small-regular text-light-2">
+          <p className="mt-4 text-center text-small-regular text-light-2">
             Don't have an account?
             <Link
               to="/sign-up"
