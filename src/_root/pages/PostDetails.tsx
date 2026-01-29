@@ -12,6 +12,7 @@ const PostDetails = () => {
   const { user } = useUserContext();
   const navigate = useNavigate();
   const { mutate: deletePost } = useDeletePost();
+  const creator = post?.creator;
 
   const handleDeletePost = () => {
     if (post) {
@@ -30,23 +31,36 @@ const PostDetails = () => {
 
           <div className="post_details-info">
             <div className="w-full flex-between">
-              <Link to={`/profile/${post?.creator._id}`} className="flex items-center gap-3">
-                <img src={post?.creator?.imageUrl || "/assets/icons/profile-placeholder.svg"} alt="creator" className="w-8 h-8 rounded-full lg:h-12 lg:w-12" />
+              {creator ? (
+                <Link to={`/profile/${creator._id}`} className="flex items-center gap-3">
+                  <img src={creator.imageUrl || "/assets/icons/profile-placeholder.svg"} alt="creator" className="w-8 h-8 rounded-full lg:h-12 lg:w-12" />
 
-                <div className="flex flex-col ">
-                  <p className="base-medium lg:body-bold text-light-1">{post?.creator.name}</p>
-                  <div className="gap-2 flex-center text-light-3">
-                    <p className="subtle-semibold lg:small-regular">{multiFormatDateString(post?._creationTime)}</p>-
-                    <p className="subtle-semibold lg:small-regular">{post?.location}</p>
+                  <div className="flex flex-col ">
+                    <p className="base-medium lg:body-bold text-light-1">{creator.name}</p>
+                    <div className="gap-2 flex-center text-light-3">
+                      <p className="subtle-semibold lg:small-regular">{multiFormatDateString(post?._creationTime)}</p>-
+                      <p className="subtle-semibold lg:small-regular">{post?.location}</p>
+                    </div>
+                  </div>
+                </Link>
+              ) : (
+                <div className="flex items-center gap-3">
+                  <img src="/assets/icons/profile-placeholder.svg" alt="creator" className="w-8 h-8 rounded-full lg:h-12 lg:w-12" />
+                  <div className="flex flex-col ">
+                    <p className="base-medium lg:body-bold text-light-1">Unknown creator</p>
+                    <div className="gap-2 flex-center text-light-3">
+                      <p className="subtle-semibold lg:small-regular">{multiFormatDateString(post?._creationTime)}</p>-
+                      <p className="subtle-semibold lg:small-regular">{post?.location}</p>
+                    </div>
                   </div>
                 </div>
-              </Link>
+              )}
 
               <div className="gap-4 flex-center">
-                <Link to={`/update-post/${post?._id}`} className={`${user.id !== post?.creator._id && "hidden"}`}>
+                <Link to={`/update-post/${post?._id}`} className={`${user.id !== creator?._id && "hidden"}`}>
                   <img src="/assets/icons/edit.svg" width={24} height={24} alt="edit" />
                 </Link>
-                <Button onClick={handleDeletePost} variant="ghost" className={`ghost_details-delete_btn ${user.id !== post?.creator._id && "hidden"}`}>
+                <Button onClick={handleDeletePost} variant="ghost" className={`ghost_details-delete_btn ${user.id !== creator?._id && "hidden"}`}>
                   <img src="/assets/icons/delete.svg" alt="delete" width={24} height={24} />
                 </Button>
               </div>
