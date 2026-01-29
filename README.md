@@ -2,7 +2,7 @@
 
 ## Details
 <p>
-  This is a social media app built with React and Appwrite.io for the backend.
+  This is a social media app built with React and Convex for the backend.
   <br>
   <br>
   This features the use of different languages such as:
@@ -12,22 +12,19 @@
     <li>HTML</li>
     <li>Tailwind CSS</li>
   </ul>
-  It also features the use of a database from Appwrite.io
+  It also features the use of a database from Convex.
 </p>
 
 ## Features Available Now
   <ul>
     <li>Home Page with Posts from Users</li>
     <li>Explore Page with Search function</li>
-    <li>Fully functional Login & Signup authentication with Appwrite for DB</li>
+    <li>Fully functional Login & Signup authentication with Convex for DB</li>
     <li>Creating, Liking & Saving Posts</li>
   </ul>
 
 ## Features in Development
 <ul>
-  <li>People Tab to see all users on the app</li>
-  <li>Saved Tab to see all posts you've saved</li>
-  <li>Profile tab to see an overview of your profile and others</li>
   <li>Deleting Posts</li>
 </ul>
 
