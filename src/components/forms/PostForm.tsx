@@ -7,14 +7,13 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Textarea } from "../ui/textarea";
 import FileUploader from "../shared/FileUploader";
-import { Models } from "appwrite";
 import { PostValidation } from "@/lib/validation";
 import { useCreatePost, useUpdatePost } from "@/lib/react-query/queriesAndMutations";
 import { useUserContext } from "@/context/AuthContext";
 import { useToast } from "../ui/use-toast";
 
 type PostFormProps = {
-  post?: Models.Document;
+  post?: any;
   action: "Create" | "Update";
 };
 
@@ -42,15 +41,15 @@ const PostForm = ({ post, action }: PostFormProps) => {
     if (post && action === "Update") {
       const updatedPost = await updatePost({
         ...values,
-        postId: post.$id,
-        imageId: post?.imageId,
+        postId: post._id,
+        imageId: post?.imageStorageId || "",
         imageUrl: post?.imageUrl,
       });
       if (!updatedPost) {
         toast({ title: "Please try again!" });
       }
 
-      return navigate(`/posts/${post.$id}`);
+      return navigate(`/posts/${post._id}`);
     }
     const newPost = await createPost({
       ...values,

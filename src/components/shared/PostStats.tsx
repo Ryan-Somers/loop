@@ -1,18 +1,18 @@
 import { useDeleteSavedPost, useGetCurrentUser, useLikePost, useSavePost } from "@/lib/react-query/queriesAndMutations";
 import { checkIsLiked } from "@/lib/utils";
-import { Models } from "appwrite";
 import { useState, useEffect } from "react";
 import Loader from "./Loader";
 
 type PostStatsProps = {
-  post?: Models.Document;
+  post?: any;
   userId: string;
 };
 
 const PostStats = ({ post, userId }: PostStatsProps) => {
-  const likesList = post?.likes.map((user: Models.Document) => user.$id);
+  // In Convex, likes is already an array of user IDs
+  const likesList = post?.likes || [];
 
-  const [likes, setLikes] = useState(likesList);
+  const [likes, setLikes] = useState<string[]>(likesList);
   const [isSaved, setIsSaved] = useState(false);
 
   const { mutate: likePost } = useLikePost();
@@ -21,11 +21,16 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
 
   const { data: currentUser } = useGetCurrentUser();
 
-  const savedPostRecord = currentUser?.save.find((record: Models.Document) => record.post.$id === post?.$id);
+  // Find if this post is saved by the current user
+  const savedPostRecord = currentUser?.saves?.find((record: any) => record.post?._id === post?._id);
+
+  useEffect(() => {
+    setLikes(post?.likes || []);
+  }, [post?.likes]);
 
   useEffect(() => {
     setIsSaved(!!savedPostRecord);
-  }, [currentUser]);
+  }, [currentUser, savedPostRecord]);
 
   const handleLikePost = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -41,7 +46,7 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
     }
 
     setLikes(newLikes);
-    likePost({ postId: post?.$id || "", likesArray: newLikes });
+    likePost({ postId: post?._id || "", likesArray: newLikes });
   };
 
   const handleSavePost = (e: React.MouseEvent) => {
@@ -49,9 +54,9 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
 
     if (savedPostRecord) {
       setIsSaved(false);
-      deleteSavedPost(savedPostRecord.$id);
+      deleteSavedPost(savedPostRecord._id);
     } else {
-      savePost({ postId: post?.$id || "", userId });
+      savePost({ postId: post?._id || "", userId });
       setIsSaved(true);
     }
   };

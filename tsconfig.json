@@ -28,6 +28,6 @@
       ]
     }
   },
-  "include": ["src"],
+  "include": ["src", "convex"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

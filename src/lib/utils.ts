@@ -24,10 +24,19 @@ export function formatDateString(dateString: string) {
   return `${formattedDate} at ${time}`;
 }
 
-// 
-export const multiFormatDateString = (timestamp: string = ""): string => {
-  const timestampNum = Math.round(new Date(timestamp).getTime() / 1000);
-  const date: Date = new Date(timestampNum * 1000);
+// Handle both string timestamps and Convex numeric timestamps (milliseconds)
+export const multiFormatDateString = (timestamp: string | number = ""): string => {
+  let date: Date;
+
+  if (typeof timestamp === "number") {
+    // Convex _creationTime is in milliseconds
+    date = new Date(timestamp);
+  } else if (timestamp) {
+    date = new Date(timestamp);
+  } else {
+    return "Just now";
+  }
+
   const now: Date = new Date();
 
   const diff: number = now.getTime() - date.getTime();
@@ -38,7 +47,7 @@ export const multiFormatDateString = (timestamp: string = ""): string => {
 
   switch (true) {
     case Math.floor(diffInDays) >= 30:
-      return formatDateString(timestamp);
+      return formatDateString(date.toISOString());
     case Math.floor(diffInDays) === 1:
       return `${Math.floor(diffInDays)} day ago`;
     case Math.floor(diffInDays) > 1 && diffInDays < 30:

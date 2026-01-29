@@ -2,15 +2,24 @@ import Loader from "@/components/shared/Loader";
 import PostStats from "@/components/shared/PostStats";
 import { Button } from "@/components/ui/button";
 import { useUserContext } from "@/context/AuthContext";
-import { useGetPostById } from "@/lib/react-query/queriesAndMutations";
+import { useDeletePost, useGetPostById } from "@/lib/react-query/queriesAndMutations";
 import { multiFormatDateString } from "@/lib/utils";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 const PostDetails = () => {
   const { id } = useParams();
   const { data: post, isPending } = useGetPostById(id || "");
   const { user } = useUserContext();
-  const handleDeletePost = () => {};
+  const navigate = useNavigate();
+  const { mutate: deletePost } = useDeletePost();
+
+  const handleDeletePost = () => {
+    if (post) {
+      deletePost({ postId: post._id, imageId: post.imageStorageId || "" });
+      navigate("/");
+    }
+  };
+
   return (
     <div className="post_details-container">
       {isPending ? (
@@ -21,23 +30,23 @@ const PostDetails = () => {
 
           <div className="post_details-info">
             <div className="w-full flex-between">
-              <Link to={`/profile/${post?.creator.$id}`} className="flex items-center gap-3">
+              <Link to={`/profile/${post?.creator._id}`} className="flex items-center gap-3">
                 <img src={post?.creator?.imageUrl || "/assets/icons/profile-placeholder.svg"} alt="creator" className="w-8 h-8 rounded-full lg:h-12 lg:w-12" />
 
                 <div className="flex flex-col ">
                   <p className="base-medium lg:body-bold text-light-1">{post?.creator.name}</p>
                   <div className="gap-2 flex-center text-light-3">
-                    <p className="subtle-semibold lg:small-regular">{multiFormatDateString(post?.$createdAt)}</p>-
+                    <p className="subtle-semibold lg:small-regular">{multiFormatDateString(post?._creationTime)}</p>-
                     <p className="subtle-semibold lg:small-regular">{post?.location}</p>
                   </div>
                 </div>
               </Link>
 
               <div className="gap-4 flex-center">
-                <Link to={`/update-post/${post?.$id}`} className={`${user.id !== post?.creator.$id && "hidden"}`}>
+                <Link to={`/update-post/${post?._id}`} className={`${user.id !== post?.creator._id && "hidden"}`}>
                   <img src="/assets/icons/edit.svg" width={24} height={24} alt="edit" />
                 </Link>
-                <Button onClick={handleDeletePost} variant="ghost" className={`ghost_details-delete_btn ${user.id !== post?.creator.$id && "hidden"}`}>
+                <Button onClick={handleDeletePost} variant="ghost" className={`ghost_details-delete_btn ${user.id !== post?.creator._id && "hidden"}`}>
                   <img src="/assets/icons/delete.svg" alt="delete" width={24} height={24} />
                 </Button>
               </div>
